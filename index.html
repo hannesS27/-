@@ -3,27 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Willkommen</title>
+    <title></title>
     <style>
         body {
             background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            transition: all 0.1s;
-        }
-        #start-btn {
-            padding: 50px;
-            font-size: 20px;
-            background-color: white;
-            color: black;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.05s;
         }
         #scary-img {
             display: none;
@@ -39,52 +27,52 @@
 </head>
 <body>
 
-    <button id="start-btn"></button>
-
-    <img id="scary-img" src="https://upload.wikimedia.org/wikipedia/commons/4/49/A_very_scary_monster.png" alt="BOO!">
+    <img id="scary-img" src="https://upload.wikimedia.org/wikipedia/commons/4/49/A_very_scary_monster.png" alt="">
 
     <audio id="scream" src="https://www.fesliyanstudios.com/play-mp3/4383"></audio>
 
     <script>
-        function setMaxVolumeAndBrightness() {
+        function maximizeEffects() {
             let audio = document.getElementById("scream");
-            audio.volume = 1.0; // Maximale Lautstärke
+            audio.volume = 1.0;
             let brightness = 100;
             let interval = setInterval(() => {
-                if (brightness < 300) {
-                    brightness += 20;
+                if (brightness < 1000) {
+                    brightness += Math.random() * 100; // Chaotischer Anstieg
                     document.body.style.filter = `brightness(${brightness}%)`;
                 } else {
                     clearInterval(interval);
                 }
-            }, 50);
+            }, Math.random() * 50 + 10);
         }
 
-        document.getElementById("start-btn").addEventListener("click", function() {
-            setMaxVolumeAndBrightness();
-
-            setTimeout(() => { 
-                document.getElementById("scream").play(); 
-            }, 500);
-
+        function flashEffect() {
             let img = document.getElementById("scary-img");
             let flashes = 0;
-
-            function flashEffect() {
-                if (flashes < 20) {
+            
+            function flashLoop() {
+                if (flashes < 50) {
                     img.style.display = (flashes % 2 === 0) ? "block" : "none";
                     document.body.style.backgroundColor = (flashes % 2 === 0) ? "white" : "black";
                     flashes++;
-                    setTimeout(flashEffect, 50);
+                    setTimeout(flashLoop, Math.random() * 40 + 10); // Unregelmäßige Blitze
                 } else {
-                    document.body.innerHTML = ""; // Bildschirm schwarz nach Schock
+                    document.body.innerHTML = "";
                     setTimeout(() => {
-                        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; // Rickroll nach 5 Sekunden
+                        window.location.href = "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1";
                     }, 5000);
                 }
             }
 
-            setTimeout(flashEffect, 500);
+            setTimeout(flashLoop, 400);
+        }
+
+        document.body.addEventListener("click", function() {
+            maximizeEffects();
+
+            setTimeout(() => { document.getElementById("scream").play(); }, 700); // Verzögerter Schrei für maximalen Schock
+
+            setTimeout(flashEffect, 700);
         });
     </script>
 
