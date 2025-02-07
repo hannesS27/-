@@ -32,48 +32,30 @@
     <audio id="scream" src="https://www.fesliyanstudios.com/play-mp3/4383"></audio>
 
     <script>
-        function maximizeEffects() {
+        function startJumpscare() {
             let audio = document.getElementById("scream");
             audio.volume = 1.0;
-            let brightness = 100;
-            let interval = setInterval(() => {
-                if (brightness < 1000) {
-                    brightness += Math.random() * 100; // Chaotischer Anstieg
-                    document.body.style.filter = `brightness(${brightness}%)`;
-                } else {
-                    clearInterval(interval);
-                }
-            }, Math.random() * 50 + 10);
-        }
+            audio.play();
 
-        function flashEffect() {
             let img = document.getElementById("scary-img");
+            img.style.display = "block";
+
             let flashes = 0;
-            
+
             function flashLoop() {
-                if (flashes < 50) {
-                    img.style.display = (flashes % 2 === 0) ? "block" : "none";
+                if (flashes < 40) {  
                     document.body.style.backgroundColor = (flashes % 2 === 0) ? "white" : "black";
                     flashes++;
-                    setTimeout(flashLoop, Math.random() * 40 + 10); // Unregelmäßige Blitze
+                    setTimeout(flashLoop, 50);
                 } else {
-                    document.body.innerHTML = "";
-                    setTimeout(() => {
-                        window.location.href = "https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1";
-                    }, 5000);
+                    window.location.href = "https://youtu.be/QB7ACr7pUuE?si=N0S4s2V6Bj0gTa-P";
                 }
             }
 
-            setTimeout(flashLoop, 400);
+            flashLoop();
         }
 
-        document.body.addEventListener("click", function() {
-            maximizeEffects();
-
-            setTimeout(() => { document.getElementById("scream").play(); }, 700); // Verzögerter Schrei für maximalen Schock
-
-            setTimeout(flashEffect, 700);
-        });
+        document.body.addEventListener("click", startJumpscare);
     </script>
 
 </body>
